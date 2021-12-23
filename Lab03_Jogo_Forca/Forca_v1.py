@@ -66,13 +66,15 @@ O   |
 =========''']
 
 # Classe
+
+
 class Hangman:
 
     # # Método Construtor
     def __init__(self, word):
         self.word = word
         self.letters = []
-        self.countlettersRight = 0        
+        self.countlettersRight = 0
         self.countlettersWrong = 0
 
     # # Método para adivinhar a letra
@@ -93,7 +95,7 @@ class Hangman:
 
     # # Método para não mostrar a letra no board
     def hide_word(self):
-        return ''.join([(letter if letter in self.letters else "_" ) for letter in self.word])
+        return ''.join([(letter if letter in self.letters else "_") for letter in self.word])
 
     # # Método para checar o status do game e imprimir o board na tela
     def print_game_status(self):
@@ -107,6 +109,8 @@ def rand_word():
     return bank[random.randint(0, len(bank) - 1)].strip()
 
 # Função Main - Execução do Programa
+
+
 def main():
 
     # Objeto
