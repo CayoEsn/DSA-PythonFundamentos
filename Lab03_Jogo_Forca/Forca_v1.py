@@ -73,21 +73,19 @@ class Hangman:
     # # Método Construtor
     def __init__(self, word):
         self.word = word
-        self.letters = []
-        self.countlettersRight = 0
-        self.countlettersWrong = 0
+        self.lettersRight = []
+        self.lettersWrong = []
 
     # # Método para adivinhar a letra
     def guess(self, letter):
         if (letter in self.word):
-            self.letters.append(letter)
-            self.countlettersRight += 1
+            if (not(letter in self.lettersRight)): self.lettersRight.append(letter)
         else:
-            self.countlettersWrong += 1
+            if (not(letter in self.lettersWrong)): self.lettersWrong.append(letter)
 
     # # Método para verificar se o jogo terminou
     def hangman_over(self):
-        return self.countlettersWrong >= 6
+        return len(self.lettersWrong) >= 6
 
     # # Método para verificar se o jogador venceu
     def hangman_won(self):
@@ -95,11 +93,20 @@ class Hangman:
 
     # # Método para não mostrar a letra no board
     def hide_word(self):
-        return ''.join([(letter if letter in self.letters else "_") for letter in self.word])
+        return ''.join([(letter if letter in self.lettersRight else "_") for letter in self.word])
 
     # # Método para checar o status do game e imprimir o board na tela
     def print_game_status(self):
-        return board[self.countlettersWrong]
+        print(board[len(self.lettersWrong)])
+        print("\n")
+        print("Palavra: " + self.hide_word())
+        print("\n")
+        print("Letras erradas: ")
+        [print(letter) for letter in self.lettersWrong]
+        print("\n")
+        print("Letras corretas: ")
+        [print(letter) for letter in self.lettersRight]
+        print("\n")
 
 
 # Função para ler uma palavra de forma aleatória do banco de palavras
@@ -118,16 +125,8 @@ def main():
 
     # Enquanto o jogo não tiver terminado, print do status, solicita uma letra e faz a leitura do caracter
     while (not(game.hangman_over()) and not(game.hangman_won())):
-        print(game.print_game_status())
-        print("\n")
-        print("Palavra: " + game.hide_word())
-        print("\n")
-        print("Letras erradas: " + str(game.countlettersWrong))
-        print("\n")
-        print("Letras corretas: " + str(game.countlettersRight))
-        print("\n")
+        game.print_game_status()
         letter = input("Digite uma letra: ")
-
         game.guess(letter)
 
     # Verifica o status do jogo
